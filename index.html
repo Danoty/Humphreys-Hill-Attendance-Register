@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hotel AttendPro Elite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#062c22">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<section id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="logo">HH</div>
+    <h1>Hotel AttendPro Elite</h1>
+    <p>Premium hotel event attendance system</p>
+
+    <label>Username
+      <input id="username" value="admin">
+    </label>
+
+    <label>Password
+      <input id="password" type="password" value="admin123">
+    </label>
+
+    <button id="loginBtn" class="primary">Login</button>
+    <p class="hint">Default login: admin / admin123</p>
+  </div>
+</section>
+
+<section id="appPage" class="hidden">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo small">HH</div>
+      <div>
+        <h2>AttendPro</h2>
+        <p>Elite Hotel Edition</p>
+      </div>
+    </div>
+
+    <nav>
+      <button class="nav active" data-page="dashboard">Dashboard</button>
+      <button class="nav" data-page="events">Events</button>
+      <button class="nav" data-page="records">Registrations</button>
+      <button class="nav" data-page="reports">Reports</button>
+      <button class="nav" data-page="privacy">Data Protection</button>
+    </nav>
+
+    <div class="secure-box">
+      <b>Hotel Ready</b>
+      <span>QR registration</span>
+      <span>Guest signatures</span>
+      <span>Meal & accommodation fields</span>
+      <span>CSV/PDF reports</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menuBtn">☰</button>
+      <div>
+        <b id="pageTitle">Dashboard</b>
+        <span>Events are stored in this browser</span>
+      </div>
+      <div class="top-actions">
+        <button id="installBtn" class="ghost">Install App</button>
+        <button id="backupBtn" class="ghost">Backup</button>
+        <button id="logoutBtn" class="danger">Logout</button>
+      </div>
+    </header>
+
+    <section id="dashboard" class="page active">
+      <div class="hero">
+        <span class="pill">Hotel Event Management</span>
+        <h1>World-class attendance for conferences, trainings and hotel events.</h1>
+        <p>Create an event, share a registration link or QR code, capture participant details and signatures, then generate reports.</p>
+        <button class="gold" onclick="showPage('events')">Create Event</button>
+        <button class="glass" onclick="showPage('records')">View Records</button>
+      </div>
+
+      <div class="stats">
+        <div><span>Events</span><b id="statEvents">0</b></div>
+        <div><span>Imported Guests</span><b id="statRecords">0</b></div>
+        <div><span>Accommodation</span><b id="statRooms">0</b></div>
+        <div><span>VIPs</span><b id="statVip">0</b></div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h2>Quick Workflow</h2>
+          <ol>
+            <li>Create event.</li>
+            <li>Copy/share registration link or QR code.</li>
+            <li>Participant opens link, fills details, signs and downloads registration file.</li>
+            <li>Admin imports files and exports CSV/PDF reports.</li>
+          </ol>
+        </div>
+        <div class="panel">
+          <h2>Recent Records</h2>
+          <div id="recentRecords"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="page">
+      <div class="panel">
+        <h2>Create Hotel Event</h2>
+        <div class="form-grid">
+          <label>Event Name <input id="eventName" placeholder="KUSU INDUCTION MEETING"></label>
+          <label>Venue / Room <input id="venue" placeholder="BoardRoom / Conference Hall"></label>
+          <label>Date <input id="eventDate" type="date"></label>
+          <label>Capacity <input id="capacity" type="number" placeholder="30"></label>
+          <label>Package
+            <select id="packageType">
+              <option>Conference Package</option>
+              <option>Training Package</option>
+              <option>Meeting Package</option>
+              <option>Accommodation + Conference</option>
+              <option>Private Event</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Meal Plan
+            <select id="mealPlan">
+              <option>Tea Only</option>
+              <option>Tea + Lunch</option>
+              <option>Full Day Package</option>
+              <option>Residential Package</option>
+              <option>No Meal</option>
+            </select>
+          </label>
+          <label>Custom Columns <input id="columns" placeholder="KUSU, Email, Department"></label>
+        </div>
+        <button id="createEventBtn" class="primary">Create Event</button>
+      </div>
+
+      <div class="panel">
+        <h2>Stored Events</h2>
+        <div id="eventsList"></div>
+      </div>
+    </section>
+
+    <section id="records" class="page">
+      <div class="panel">
+        <h2>Import Participant Registration Files</h2>
+        <p class="muted">Select JSON files downloaded by participants after registration.</p>
+        <input type="file" id="importFiles" multiple accept=".json">
+        <div class="actions">
+          <button id="importBtn" class="primary">Import Files</button>
+          <button id="clearRecordsBtn" class="danger">Clear Records</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Professional Attendance Register</h2><p class="muted">Imported participant records are arranged into a clean printable register.</p>
+        <div id="recordsTable"></div>
+      </div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="panel">
+        <h2>Reports</h2>
+        <div class="actions">
+          <button id="csvBtn" class="primary">Download CSV</button>
+          <button id="pdfBtn" class="gold">Download PDF</button>
+          <button id="mealBtn">Meal Report CSV</button>
+          <button id="roomBtn">Accommodation CSV</button>
+          <button id="printRegisterBtn">Print Attendance Register</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="page">
+      <div class="panel">
+        <h2>Data Protection Notes</h2>
+        <p>This GitHub-only version stores admin events and imported records in the browser LocalStorage. It does not use Firebase or a backend.</p>
+        <p>For real-time central collection from many phones, a backend/database will be required.</p>
+      </div>
+    </section>
+  </main>
+</section>
+
+<section id="registerPage" class="hidden">
+  <main class="register-main">
+    <section class="panel">
+      <div class="register-head">
+        <div class="logo small">HH</div>
+        <div>
+          <h1 id="regTitle">Registration</h1>
+          <p id="regDetails"></p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <label>Full Name <input id="fullName"></label>
+        <label>ID / Passport Number <input id="idNumber"></label>
+        <label>Phone Number <input id="phone"></label>
+        <label>Organization / Company <input id="organization"></label>
+        <label>Email <input id="email" type="email"></label>
+        <label>Guest Type
+          <select id="guestType">
+            <option>Participant</option>
+            <option>Speaker</option>
+            <option>Trainer</option>
+            <option>VIP Guest</option>
+            <option>Organizer</option>
+            <option>Hotel Staff</option>
+          </select>
+        </label>
+        <label>Accommodation Required?
+          <select id="accommodation"><option>No</option><option>Yes</option></select>
+        </label>
+        <label>Meal Preference
+          <select id="mealPreference">
+            <option>Regular</option>
+            <option>Vegetarian</option>
+            <option>Special Diet</option>
+            <option>No Meal</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="customFields" class="form-grid"></div>
+
+      <h3>Signature</h3>
+      <div class="signature-box"><canvas id="signatureCanvas"></canvas></div>
+
+      <div class="actions">
+        <button id="clearSignatureBtn">Clear Signature</button>
+        <button id="submitRegistrationBtn" class="primary">Submit Registration</button>
+      </div>
+
+      <div id="message"></div>
+    </section>
+  </main>
+</section>
+
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

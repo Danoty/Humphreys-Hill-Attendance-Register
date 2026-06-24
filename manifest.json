@@ -1,0 +1,10 @@
+{
+  "name": "Hotel AttendPro Elite",
+  "short_name": "AttendPro",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#062c22",
+  "background_color": "#062c22",
+  "icons": []
+}
