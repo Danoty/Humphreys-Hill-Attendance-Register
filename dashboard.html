@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard | Humphreys Hill EventPro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#062c22">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo small">HH</div>
+      <div>
+        <h2>EventPro</h2>
+        <p>Hotel Edition</p>
+      </div>
+    </div>
+
+    <nav>
+      <button class="nav active" data-page="overview">Overview</button>
+      <button class="nav" data-page="events">Events</button>
+      <button class="nav" data-page="registrations">Registrations</button>
+      <button class="nav" data-page="checkin">Check-in</button>
+      <button class="nav" data-page="badges">Badges</button>
+      <button class="nav" data-page="reports">Reports</button>
+      <button class="nav" data-page="settings">Settings</button>
+    </nav>
+
+    <div class="secure-box">
+      <b>Active Controls</b>
+      <span>Browser database</span>
+      <span>QR registration</span>
+      <span>Signature capture</span>
+      <span>Professional PDF/CSV</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menuBtn">☰</button>
+      <div>
+        <b id="pageTitle">Overview</b>
+        <span id="currentUser">Logged in</span>
+      </div>
+      <div class="top-actions">
+        <button id="installBtn" class="btn ghost">Install</button>
+        <button id="backupBtn" class="btn ghost">Backup</button>
+        <button id="logoutBtn" class="btn danger">Logout</button>
+      </div>
+    </header>
+
+    <section id="overview" class="page active">
+      <div class="hero">
+        <span class="pill">Humphreys Hill House</span>
+        <h1>World-class event registration, attendance and reporting.</h1>
+        <p>Create events, share QR links, capture signatures, check in guests, print badges and generate professional reports.</p>
+        <button class="btn gold" onclick="Dashboard.showPage('events')">Create Event</button>
+        <button class="btn glass" onclick="Dashboard.showPage('registrations')">View Register</button>
+      </div>
+
+      <div class="stats">
+        <div><span>Events</span><b id="statEvents">0</b></div>
+        <div><span>Registered</span><b id="statRegs">0</b></div>
+        <div><span>Checked In</span><b id="statChecked">0</b></div>
+        <div><span>VIP Guests</span><b id="statVip">0</b></div>
+      </div>
+
+      <div class="grid two">
+        <div class="panel">
+          <h2>Today / Latest Events</h2>
+          <div id="latestEvents"></div>
+        </div>
+        <div class="panel">
+          <h2>Recent Registrations</h2>
+          <div id="recentRegs"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="page">
+      <div class="panel">
+        <h2>Create Event</h2>
+        <div class="form-grid">
+          <label>Event Name <input id="eventName" placeholder="KUSU Induction Meeting"></label>
+          <label>Venue / Room <input id="venue" placeholder="Boardroom / Conference Hall"></label>
+          <label>Date <input id="eventDate" type="date"></label>
+          <label>Capacity <input id="capacity" type="number" placeholder="30"></label>
+          <label>Package
+            <select id="packageType">
+              <option>Conference Package</option>
+              <option>Training Package</option>
+              <option>Meeting Package</option>
+              <option>Accommodation + Conference</option>
+              <option>Private Event</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Meal Plan
+            <select id="mealPlan">
+              <option>Tea Only</option>
+              <option>Tea + Lunch</option>
+              <option>Full Day Package</option>
+              <option>Residential Package</option>
+              <option>No Meal</option>
+            </select>
+          </label>
+          <label>Custom Fields <input id="customFieldsInput" placeholder="Department, Seat Number, KUSU Branch"></label>
+        </div>
+        <button id="createEventBtn" class="btn primary">Create Event & Generate QR</button>
+      </div>
+
+      <div class="panel">
+        <h2>Stored Events</h2>
+        <div id="eventList"></div>
+      </div>
+    </section>
+
+    <section id="registrations" class="page">
+      <div class="panel">
+        <h2>Import / Manage Registration Files</h2>
+        <p class="muted">For GitHub Pages only: participants submit by downloading a JSON registration file. Import those files here.</p>
+        <input type="file" id="importFiles" accept=".json" multiple>
+        <div class="actions">
+          <button id="importBtn" class="btn primary">Import Files</button>
+          <button id="printRegisterBtn" class="btn gold">Print Register</button>
+          <button id="clearRegsBtn" class="btn danger">Clear Registrations</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Professional Attendance Register</h2>
+        <div id="registrationTable"></div>
+      </div>
+    </section>
+
+    <section id="checkin" class="page">
+      <div class="panel">
+        <h2>Reception Check-in</h2>
+        <p class="muted">Search by name, ID/passport, phone or registration number, then mark as checked in.</p>
+        <input id="searchInput" placeholder="Search participant...">
+        <div id="checkinResults"></div>
+      </div>
+    </section>
+
+    <section id="badges" class="page">
+      <div class="panel">
+        <h2>Participant Badges</h2>
+        <button id="printBadgesBtn" class="btn primary">Print Badges</button>
+        <div id="badgeGrid" class="badge-grid"></div>
+      </div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="panel">
+        <h2>Reports</h2>
+        <div class="actions">
+          <button id="csvBtn" class="btn primary">Attendance CSV</button>
+          <button id="pdfBtn" class="btn gold">Attendance PDF</button>
+          <button id="mealBtn" class="btn">Meal Report CSV</button>
+          <button id="roomBtn" class="btn">Accommodation CSV</button>
+          <button id="vipBtn" class="btn">VIP CSV</button>
+          <button id="printReportBtn" class="btn">Print Register</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="panel">
+        <h2>Data Protection & Settings</h2>
+        <p>This GitHub Pages version stores events and imported registration records in the browser LocalStorage.</p>
+        <p>For automatic central collection from many devices, connect a backend/database later.</p>
+        <div class="actions">
+          <button id="wipeBtn" class="btn danger">Wipe All Local Data</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast"></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/qr.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/registration.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

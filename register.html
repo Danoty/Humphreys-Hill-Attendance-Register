@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Register | Humphreys Hill EventPro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#062c22">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+  <main class="registration-page">
+    <section class="registration-card">
+      <div class="reg-head">
+        <div class="logo small">HH</div>
+        <div>
+          <h1 id="eventTitle">Participant Registration</h1>
+          <p id="eventMeta">Open a registration link generated from the dashboard.</p>
+        </div>
+      </div>
+
+      <div id="formArea">
+        <div class="form-grid">
+          <label>Full Name <input id="fullName"></label>
+          <label>ID / Passport Number <input id="idNumber"></label>
+          <label>Phone Number <input id="phone"></label>
+          <label>Email <input id="email" type="email"></label>
+          <label>Organization / Company <input id="organization"></label>
+          <label>Designation <input id="designation"></label>
+          <label>Vehicle Number <input id="vehicle"></label>
+          <label>Country <input id="country" value="Kenya"></label>
+          <label>Guest Type
+            <select id="guestType">
+              <option>Participant</option>
+              <option>Speaker</option>
+              <option>Trainer</option>
+              <option>VIP Guest</option>
+              <option>Organizer</option>
+              <option>Media</option>
+              <option>Hotel Staff</option>
+            </select>
+          </label>
+          <label>Accommodation Required?
+            <select id="accommodation"><option>No</option><option>Yes</option></select>
+          </label>
+          <label>Meal Preference
+            <select id="mealPreference">
+              <option>Regular</option>
+              <option>Vegetarian</option>
+              <option>Special Diet</option>
+              <option>No Meal</option>
+            </select>
+          </label>
+          <label>Emergency Contact <input id="emergency"></label>
+        </div>
+
+        <div id="customFieldsArea" class="form-grid"></div>
+
+        <h3>Digital Signature</h3>
+        <div class="signature-box"><canvas id="signatureCanvas"></canvas></div>
+
+        <div class="actions">
+          <button id="clearSignatureBtn" class="btn">Clear Signature</button>
+          <button id="submitBtn" class="btn primary">Submit Registration</button>
+        </div>
+      </div>
+
+      <div id="message"></div>
+    </section>
+  </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

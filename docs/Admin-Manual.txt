@@ -1,0 +1,11 @@
+HUMPHREYS HILL EVENTPRO ADMIN MANUAL
+
+1. Login using admin/admin123.
+2. Create an event from the Events page.
+3. Copy the registration link or download the QR code.
+4. Share the link/QR with participants.
+5. Participants fill the form, sign, submit, and send the downloaded JSON file to admin.
+6. Import JSON files under Registrations.
+7. Use Check-in to mark guests present.
+8. Print badges or attendance register.
+9. Download CSV/PDF reports.
