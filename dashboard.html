@@ -28,6 +28,7 @@
       <button class="nav" data-page="checkin">Check-in</button>
       <button class="nav" data-page="badges">Badges</button>
       <button class="nav" data-page="reports">Reports</button>
+      <button class="nav" data-page="users">Users & Access</button>
       <button class="nav" data-page="settings">Settings</button>
     </nav>
 
@@ -157,15 +158,85 @@
 
     <section id="reports" class="page">
       <div class="panel">
-        <h2>Reports</h2>
+        <h2>Reports Centre</h2>
+        <p class="muted">Filter attendance by event and date, then download event-specific reports.</p>
+
+        <div class="form-grid">
+          <label>Event
+            <select id="reportEventFilter">
+              <option value="">All Events</option>
+            </select>
+          </label>
+
+          <label>From Date
+            <input id="reportFromDate" type="date">
+          </label>
+
+          <label>To Date
+            <input id="reportToDate" type="date">
+          </label>
+        </div>
+
         <div class="actions">
-          <button id="csvBtn" class="btn primary">Attendance CSV</button>
-          <button id="pdfBtn" class="btn gold">Attendance PDF</button>
+          <button id="applyReportFilterBtn" class="btn primary">Apply Filter</button>
+          <button id="eventCsvBtn" class="btn primary">Download Filtered CSV</button>
+          <button id="eventPdfBtn" class="btn gold">Download Filtered PDF</button>
+          <button id="printFilteredBtn" class="btn">Print Filtered Register</button>
+          <button id="csvBtn" class="btn">All Attendance CSV</button>
+          <button id="pdfBtn" class="btn">All Attendance PDF</button>
           <button id="mealBtn" class="btn">Meal Report CSV</button>
           <button id="roomBtn" class="btn">Accommodation CSV</button>
           <button id="vipBtn" class="btn">VIP CSV</button>
-          <button id="printReportBtn" class="btn">Print Register</button>
         </div>
+      </div>
+
+      <div class="panel">
+        <h2>Filtered Attendance Preview</h2>
+        <div id="filteredReportTable"></div>
+      </div>
+    </section>
+
+
+    <section id="users" class="page">
+      <div class="panel">
+        <h2>Create System User</h2>
+        <p class="muted">Admin can create users such as Manager, CEO, Reception, Reports Officer, Finance or Security and assign access rights.</p>
+
+        <div class="form-grid">
+          <label>Full Name <input id="newUserName" placeholder="Hotel Manager"></label>
+          <label>Username <input id="newUsername" placeholder="manager"></label>
+          <label>Password <input id="newPassword" placeholder="manager123"></label>
+          <label>Role
+            <select id="newUserRole">
+              <option>Manager</option>
+              <option>CEO</option>
+              <option>Reception</option>
+              <option>Reports Officer</option>
+              <option>Finance</option>
+              <option>Security</option>
+              <option>Admin</option>
+            </select>
+          </label>
+        </div>
+
+        <h3>Access Rights</h3>
+        <div class="permission-grid">
+          <label><input type="checkbox" class="perm" value="overview" checked> Dashboard</label>
+          <label><input type="checkbox" class="perm" value="events"> Create/View Events</label>
+          <label><input type="checkbox" class="perm" value="registrations"> Registrations</label>
+          <label><input type="checkbox" class="perm" value="checkin"> Check-in</label>
+          <label><input type="checkbox" class="perm" value="badges"> Badges</label>
+          <label><input type="checkbox" class="perm" value="reports"> Reports</label>
+          <label><input type="checkbox" class="perm" value="users"> User Management</label>
+          <label><input type="checkbox" class="perm" value="settings"> Settings</label>
+        </div>
+
+        <button id="createUserBtn" class="btn primary">Create User</button>
+      </div>
+
+      <div class="panel">
+        <h2>System Users</h2>
+        <div id="usersTable"></div>
       </div>
     </section>
 

@@ -1,33 +1,22 @@
-# Humphreys Hill EventPro
+# Humphreys Hill EventPro v2
 
-Premium hotel conference, meeting and training attendance platform.
+## New Features Added
+- Reports can now be filtered by event.
+- Reports can now be filtered by date range.
+- Download attendance for a specific event as CSV.
+- Download attendance for a specific event as PDF.
+- Preview filtered attendance before download.
+- Admin can create users.
+- User roles: Admin, CEO, Manager, Reception, Reports Officer, Finance, Security.
+- Admin assigns access rights/privileges per user.
+- Login respects user permissions.
 
-## Login
+## Default Login
 Admin: admin / admin123
+CEO: ceo / ceo123
+Manager: manager / manager123
 Reception: reception / reception123
 Reports: reports / reports123
 
-## GitHub Pages workflow
-1. Upload all files.
-2. Open index.html.
-3. Login.
-4. Create event.
-5. Copy registration link or download QR.
-6. Participants register and download JSON file.
-7. Admin imports JSON files.
-8. Print/download reports.
-
-## Features
-- Event creation
-- QR code registration
-- WhatsApp sharing
-- Participant registration
-- Digital signature
-- Duplicate registration lock per device
-- Import registrations
-- Professional attendance register
-- Check-in desk
-- Badges
-- CSV/PDF reports
-- Meal, accommodation and VIP reports
-- PWA-ready
+## GitHub Pages
+Upload all files to GitHub Pages after deleting old files.
